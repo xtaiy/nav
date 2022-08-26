@@ -3,9 +3,10 @@ const $lastLi=$siteList.find('li.last')
 const x=localStorage.getItem('x')
 const xObject=JSON.parse(x)//JSON.parse把字符串变成对象
 const hashMap=xObject||[
-    {logo:'A',url:'https://www.acfun.cn'},
-    {logo:'B',url:'https://www.bilibili.com'}
+    {logo:'V',url:'https://cn.vuejs.org/index.html'},
+    {logo:'I',url:'https://iconfont.cn/'}
 ]
+localStorage.setItem('x',JSON.stringify(hashMap))
 const simplifyUrl=(url)=>{
     return url.replace('https://','')
     .replace('http://','')
@@ -32,6 +33,8 @@ const render=()=>{
         $li.on('click','.close',(e)=>{
             e.stopPropagation()
             hashMap.splice(index,1)
+            const string=JSON.stringify(hashMap)
+            localStorage.setItem('x',string)
             render()
         })
     })
@@ -43,19 +46,18 @@ $('.addButton').on('click',()=>{
         if(url.indexOf('http')!==0){
             url='https://'+url
         }
-        console.log(url)
         hashMap.push({
             logo:simplifyUrl(url)[0].toUpperCase(),//toUpperCase()把字符变大写，还可以在CSS中设置text-transf：uppercase；设置
             url:url
         })
-        $siteList.find('li:not(.last)').remove()
+        const string=JSON.stringify(hashMap)
+        localStorage.setItem('x',string)
         render()
 })
-window.onbeforeunload=()=>{
-    console.log('页面要关闭了')
-    const string=JSON.stringify(hashMap)//JSON.stringify可以把对象变成字符串
-    localStorage.setItem('x',string)
-}
+// window.onbeforeunload=()=>{
+//     const string=JSON.stringify(hashMap)//JSON.stringify可以把对象变成字符串
+//     localStorage.setItem('x',string)
+// }
 $(document).on('keypress',(e)=>{
     const key=e.key/*可以简写为const {key}=e */
     for(let i=0;i<hashMap.length;i++){

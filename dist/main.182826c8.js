@@ -108,7 +108,8 @@ var $siteList = $('.siteList');
 var $lastLi = $siteList.find('li.last');
 var x = localStorage.getItem('x');
 var xObject = JSON.parse(x); //JSON.parse把字符串变成对象
-var hashMap = xObject || [{ logo: 'A', url: 'https://www.acfun.cn' }, { logo: 'B', url: 'https://www.bilibili.com' }];
+var hashMap = xObject || [{ logo: 'V', url: 'https://cn.vuejs.org/index.html' }, { logo: 'I', url: 'https://iconfont.cn/' }];
+localStorage.setItem('x', JSON.stringify(hashMap));
 var simplifyUrl = function simplifyUrl(url) {
     return url.replace('https://', '').replace('http://', '').replace('www.', '').replace(/\/.*/, ''); //删除以/开头的内容
 };
@@ -122,6 +123,8 @@ var render = function render() {
         $li.on('click', '.close', function (e) {
             e.stopPropagation();
             hashMap.splice(index, 1);
+            var string = JSON.stringify(hashMap);
+            localStorage.setItem('x', string);
             render();
         });
     });
@@ -133,19 +136,18 @@ $('.addButton').on('click', function () {
     if (url.indexOf('http') !== 0) {
         url = 'https://' + url;
     }
-    console.log(url);
     hashMap.push({
         logo: simplifyUrl(url)[0].toUpperCase(), //toUpperCase()把字符变大写，还可以在CSS中设置text-transf：uppercase；设置
         url: url
     });
-    $siteList.find('li:not(.last)').remove();
+    var string = JSON.stringify(hashMap);
+    localStorage.setItem('x', string);
     render();
 });
-window.onbeforeunload = function () {
-    console.log('页面要关闭了');
-    var string = JSON.stringify(hashMap); //JSON.stringify可以把对象变成字符串
-    localStorage.setItem('x', string);
-};
+// window.onbeforeunload=()=>{
+//     const string=JSON.stringify(hashMap)//JSON.stringify可以把对象变成字符串
+//     localStorage.setItem('x',string)
+// }
 $(document).on('keypress', function (e) {
     var key = e.key; /*可以简写为const {key}=e */
     for (var i = 0; i < hashMap.length; i++) {
@@ -155,4 +157,4 @@ $(document).on('keypress', function (e) {
     }
 });
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.bab9f111.map
+//# sourceMappingURL=main.182826c8.map

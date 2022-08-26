@@ -97,13 +97,16 @@ body {
 .siteList .site .close {
   position: absolute;
   right: 5px;
-  top: 0px;
-  background: red;
+  top: 2px;
   display: none;
   cursor: default;/*鼠标此时不是手形*/
 }
 .siteList .site:hover>.close {
   display: block;
+}
+.siteList .site .close .icon{
+ width: 25px;
+ height: 25px;;
 }
 .siteList .site .logo {
   width: 64px;
